@@ -1,0 +1,113 @@
+mode: prometheus
+ts_metrics_gpu: true
+
+dimensions:
+  - &model_name "model_name"
+  - &level "Level"
+  - &device_id "device_id"
+
+ts_metrics:
+  counter:
+    - name: CounterTsMetricExample
+      unit: ms
+      dimensions: [*model_name, *level]
+  gauge:
+    - name: GaugeModelMetricNameExample
+      unit: ms
+      dimensions: [*model_name, *level]
+    - name: CPUUtilization
+      unit: percent
+      dimensions: [*level]
+    - name: DiskAvailable
+      unit: GB
+      dimensions: [*level]
+    - name: DiskUsage
+      unit: GB
+      dimensions: [*level]
+    - name: DiskUtilization
+      unit: percent
+      dimensions: [*level]
+    - name: MemoryAvailable
+      unit: MB
+      dimensions: [*level]
+    - name: MemoryUsed
+      unit: MB
+      dimensions: [*level]
+    - name: MemoryUtilization
+      unit: percent
+      dimensions: [*level]
+    - name: GPUUtilization
+      unit: percent
+      dimensions: [*level, *device_id]
+    - name: GPUMemoryUtilization
+      unit: percent
+      dimensions: [*level, *device_id]
+    - name: GPUMemoryUsed
+      unit: MB
+      dimensions: [*level, *device_id]
+  histogram:
+    - name: HistogramTsMetricExample
+      unit: ms
+      dimensions: [*model_name, *level]
+
+model_metrics:
+  counter:
+    - name: InferenceTimeInMS
+      unit: ms
+      dimensions: [*model_name, *level]
+    - name: PredictionTime
+      unit: ms
+      dimensions: [*model_name, *level]
+    - name: NumberOfMetrics
+      unit: count
+      dimensions: [*model_name, *level]
+    - name: SizeOfImage
+      unit: kB
+      dimensions: [*model_name, *level]
+    - name: ImageHeight
+      unit: count
+      dimensions: [*model_name, *level]
+    - name: ImageWidth
+      unit: count
+      dimensions: [*model_name, *level]
+  gauge:
+    - name: CPUUtilization
+      unit: percent
+      dimensions: [*model_name, *level]
+    - name: DiskAvailable
+      unit: GB
+      dimensions: [*model_name, *level]
+    - name: DiskUsage
+      unit: GB
+      dimensions: [*model_name, *level]
+    - name: DiskUtilization
+      unit: percent
+      dimensions: [*model_name, *level]
+    - name: MemoryAvailable
+      unit: MB
+      dimensions: [*model_name, *level]
+    - name: MemoryUsed
+      unit: MB
+      dimensions: [*model_name, *level]
+    - name: MemoryUtilization
+      unit: percent
+      dimensions: [*model_name, *level]
+    - name: GPUUtilization
+      unit: percent
+      dimensions: [*level, *device_id, *model_name]
+    - name: GPUMemoryUtilization
+      unit: percent
+      dimensions: [*level, *device_id, *model_name]
+    - name: GPUMemoryUsed
+      unit: MB
+      dimensions: [*level, *device_id, *model_name]
+    - name: NIQEScore
+      unit: percent
+      dimensions: [*model_name, *level]
+    - name: BRISQUEScore
+      unit: percent
+      dimensions: [*model_name, *level]
+  histogram:
+    - name: HistogramModelMetricNameExample
+      unit: ms
+      dimensions: [*model_name, *level]

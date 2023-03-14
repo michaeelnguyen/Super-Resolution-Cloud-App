@@ -1,0 +1,263 @@
+counter ts_request_count
+counter ts_prediction_time
+
+gauge ts_image_size
+gauge ts_model_name
+gauge ts_level
+gauge ts_device_id
+gauge ts_host_name
+gauge ts_request_id
+gauge ts_time_stamp
+
+gauge ts_inf_CPU_UTILIZATION
+gauge ts_inf_DISK_AVAILABLE
+gauge ts_inf_DISK_USAGE
+gauge ts_inf_DISK_UTILIZATION
+gauge ts_inf_MEMORY_AVAILABLE
+gauge ts_inf_MEMORY_USED
+gauge ts_inf_MEMORY_UTILIZATION
+gauge ts_inf_GPU_MEMORY_UTILIZATION
+gauge ts_inf_GPU_MEMORY_USED
+gauge ts_inf_GPU_UTILIZATION
+gauge ts_NIQE_score
+gauge ts_BRISQUE_score
+
+gauge ts_CPU_UTILIZATION
+gauge ts_DISK_AVAILABLE
+gauge ts_DISK_USAGE
+gauge ts_DISK_UTILIZATION
+gauge ts_MEMORY_AVAILABLE
+gauge ts_MEMORY_USED
+gauge ts_MEMORY_UTILIZATION
+gauge ts_GPU_MEMORY_UTILIZATION
+gauge ts_GPU_MEMORY_USED
+gauge ts_GPU_UTILIZATION
+
+const IMG_SIZE /SizeOfImage\.Kilobytes:(\d+\.?\d+)\|#ModelName:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_CPU_UTIL /CPUUtilization\.Percent:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_DISK_AVAIL /DiskAvailable\.Gigabytes:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_DISK_USAGE /DiskUsage\.Gigabytes:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_DISK_UTIL /DiskUtilization\.Percent:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_MEM_AVAIL /MemoryAvailable\.Megabytes:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_MEM_USED /MemoryUsed\.Megabytes:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_MEM_UTIL /MemoryUtilization\.Percent:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_GPU_MEM_UTIL /GPUMemoryUtilization\.Percent:(\d+\.?\d+)\|#Level:([a-zA-Z]+),device_id:([0-9]+),model_name:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_GPU_MEMORY_USED /GPUMemoryUsed\.Megabytes:(\d+\.?\d+)\|#Level:([a-zA-Z]+),device_id:([0-9]+),model_name:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const INF_GPU_UTILIZATION /GPUUtilization\.Percent:(\d+\.?\d+)\|#Level:([a-zA-Z]+),device_id:([0-9]+),model_name:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const NIQE /NIQEScore\.Percent:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const BRISQUE /BRISQUEScore\.Percent:(\d+\.?\d+)\|#model_name:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const PREDICTION_TIME /PredictionTime\.Milliseconds:(\d+\.?\d+)\|#ModelName:([a-zA-Z]+),Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),requestID:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+
+const CPU_UTIL /CPUUtilization\.Percent:(\d+\.?\d+)\|#Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const DISK_AVAIL /DiskAvailable\.Gigabytes:(\d+\.?\d+)\|#Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const DISK_USAGE /DiskUsage\.Gigabytes:(\d+\.?\d+)\|#Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const DISK_UTIL /DiskUtilization\.Percent:(\d+\.?\d+)\|#Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const MEM_AVAIL /MemoryAvailable\.Megabytes:(\d+\.?\d+)\|#Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const MEM_USED /MemoryUsed\.Megabytes:(\d+\.?\d+)\|#Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const MEM_UTIL /MemoryUtilization\.Percent:(\d+\.?\d+)\|#Level:([a-zA-Z]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const GPU_MEM_UTIL /GPUMemoryUtilization\.Percent:(\d+\.?\d+)\|#Level:([a-zA-Z]+),device_id:([0-9]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const GPU_MEMORY_USED /GPUMemoryUsed\.Megabytes:(\d+\.?\d+)\|#Level:([a-zA-Z]+),device_id:([0-9]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+const GPU_UTILIZATION /GPUUtilization\.Percent:(\d+\.?\d+)\|#Level:([a-zA-Z]+),device_id:([0-9]+)\|#hostname:([a-zA-Z0-9-]+),timestamp:([0-9]+)/
+
+IMG_SIZE{
+  ts_request_count++
+  ts_image_size = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+INF_CPU_UTIL{
+  ts_inf_CPU_UTILIZATION = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+INF_DISK_AVAIL{
+  ts_inf_DISK_AVAILABLE = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+INF_DISK_USAGE{
+  ts_inf_DISK_USAGE = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+INF_DISK_UTIL{
+  ts_inf_DISK_UTILIZATION = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+INF_MEM_AVAIL{
+  ts_inf_MEMORY_AVAILABLE = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+INF_MEM_USED{
+  ts_inf_MEMORY_USED = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+INF_MEM_UTIL{
+  ts_inf_MEMORY_UTILIZATION = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+INF_GPU_MEM_UTIL{
+  ts_inf_GPU_MEMORY_UTILIZATION = $1
+  ts_level = $2
+  ts_device_id = $3
+  ts_model_name = $4
+  ts_host_name = $5
+  ts_request_id = $6
+  ts_time_stamp = $7
+}
+
+INF_GPU_MEMORY_USED{
+  ts_inf_GPU_MEMORY_USED = $1
+  ts_level = $2
+  ts_device_id = $3
+  ts_model_name = $4
+  ts_host_name = $5
+  ts_request_id = $6
+  ts_time_stamp = $7
+}
+
+INF_GPU_UTILIZATION{
+  ts_inf_GPU_UTILIZATION = $1
+  ts_level = $2
+  ts_device_id = $3
+  ts_model_name = $4
+  ts_host_name = $5
+  ts_request_id = $6
+  ts_time_stamp = $7
+}
+
+NIQE{
+  ts_NIQE_score = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+BRISQUE{
+  ts_BRISQUE_score = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+PREDICTION_TIME{
+  ts_prediction_time = $1
+  ts_model_name = $2
+  ts_level = $3
+  ts_host_name = $4
+  ts_request_id = $5
+  ts_time_stamp = $6
+}
+
+CPU_UTIL{
+  ts_CPU_UTILIZATION = $1
+  ts_level = $2
+  ts_host_name = $3
+  ts_time_stamp = $4
+}
+
+DISK_AVAIL{
+  ts_DISK_AVAILABLE = $1
+  ts_level = $2
+  ts_host_name = $3
+  ts_time_stamp = $4
+}
+
+DISK_USAGE{
+  ts_DISK_USAGE = $1
+  ts_level = $2
+  ts_host_name = $3
+  ts_time_stamp = $4
+}
+
+DISK_UTIL{
+  ts_DISK_UTILIZATION = $1
+  ts_level = $2
+  ts_host_name = $3
+  ts_time_stamp = $4
+}
+
+MEM_AVAIL{
+  ts_MEMORY_AVAILABLE = $1
+  ts_level = $2
+  ts_host_name = $3
+  ts_time_stamp = $4
+}
+
+MEM_USED{
+  ts_MEMORY_USED = $1
+  ts_level = $2
+  ts_host_name = $3
+  ts_time_stamp = $4
+}
+
+MEM_UTIL{
+  ts_MEMORY_UTILIZATION = $1
+  ts_level = $2
+  ts_host_name = $3
+  ts_time_stamp = $4
+}
+
+GPU_MEM_UTIL{
+  ts_GPU_MEMORY_UTILIZATION = $1
+  ts_level = $2
+  ts_device_id = $3
+  ts_host_name = $4
+  ts_time_stamp = $5
+}
+
+GPU_MEMORY_USED{
+  ts_GPU_MEMORY_USED = $1
+  ts_level = $2
+  ts_device_id = $3
+  ts_host_name = $4
+  ts_time_stamp = $5
+}
+
+GPU_UTILIZATION{
+  ts_GPU_UTILIZATION = $1
+  ts_level = $2
+  ts_device_id = $3
+  ts_host_name = $4
+  ts_time_stamp = $5
+}

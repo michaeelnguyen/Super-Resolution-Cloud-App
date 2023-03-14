@@ -1,0 +1,76 @@
+services:
+  torchserve:
+    build: .
+    command: ./torchserve_start.sh
+    container_name: torchserve-gpu
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+      - "8082:8082"
+      - "3903:3903"
+    volumes: 
+      - .:/usr/src/torchserve
+      - ./model-server/model-store:/home/model-server/model-store
+      - ./model-server/logs:/home/model-server/logs
+      - ./config.properties:/home/model-server/config.properties
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
+
+  django:
+      image: python-django
+      container_name: django-gpu
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/usr/src/app
+        - ./app:/usr/src/app
+        - ./sr_app:/sr_app
+      ports:
+        - "8000:8000" 
+      depends_on: 
+        - torchserve-gpu
+    
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-gpu
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus-data:/prometheus
+    ports:
+     - "9090:9090"
+    depends_on:
+    - torchserve-gpu
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana-gpu
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+    - 8083:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+
+volumes:
+  prometheus-data: {}
+  grafana-data: {}
+  app: {}
+
+  
+  
