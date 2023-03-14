@@ -52,8 +52,9 @@ services:
       - "3000:3000"
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./grafana/grafana-data:/var/lib/grafana/provisioning/
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning/dashboards/cadvisor-exporter_rev1.json:/etc/grafana/provisioning/dashboards/cadvisor-exporter_rev1.json
+      - ./grafana/provisioning/dashboards/torchserve_dashboard.json:/etc/grafana/provisioning/dashboards/torchserve_dashboard.json
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
