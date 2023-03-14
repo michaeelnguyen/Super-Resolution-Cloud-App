@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.contrib.auth.models import User
 
+# Customer model class object definition
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -28,7 +29,8 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.customer_First_Name + ' ' + self.customer_Last_Name
-    
+
+# Employee model class object definition    
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

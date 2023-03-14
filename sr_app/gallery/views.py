@@ -28,15 +28,18 @@ from PIL import Image
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer', 'employee', 'admin'])
 def galleryPage(request, pk):
+    # View to display a gallery page of the user's stored images
     user = request.user
     context = {'user': user}
     if request.user.is_authenticated and not request.user.is_staff:
         customer = request.user.customer
-
+        
+        # Retrieve the file path of the specfic user's images
         user_media_path = settings.USER_MEDIA_STORAGE.path('')
         customer_uuid_path = get_user_directory_path(instance=user, filename='')
         customer_media_path = os.path.join(user_media_path, customer_uuid_path)
         
+        # Retrieve current category to filter user images
         category = request.GET.get('category')
         if category == "All":
             photos = SRPhoto.objects.filter(user=user)

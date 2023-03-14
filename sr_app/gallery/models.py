@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 from accounts.models import Customer, Employee
 
+# Utility function to create a file path based on the type of User and Photo objects
 def get_user_directory_path(instance, filename):
        # CUSTOMER_MEDIA_ROOT/<customer_uuid>/<filename>
    if isinstance(instance, Photo):
@@ -36,7 +37,7 @@ def get_user_directory_path(instance, filename):
    else:
        raise NotImplementedError(f"Unknown model type: {type(instance)}")
 
-
+# Category model class object definition
 class Category(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -50,6 +51,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+# Photo model class object definition
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
@@ -69,7 +71,8 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.description
-    
+
+# Corresponding SRPhoto model class object definition
 class SRPhoto(models.Model):
    original_photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True)
    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
