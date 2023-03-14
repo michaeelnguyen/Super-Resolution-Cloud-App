@@ -12,7 +12,9 @@ services:
       - .:/usr/src/torchserve
       - ./model-server/model-store:/home/model-server/model-store
       - ./model-server/logs:/home/model-server/logs
-      - ./config.properties:/home/model-server/config.properties
+      - ./model-server/config.properties:/home/model-server/config.properties
+      - ./model-server/torchserve_custom.mtail:/home/model-server/torchserve_custom.mtail
+      - ./model-server/metrics.yaml:/home/model-server/metrics.yaml
     deploy:
       resources:
         reservations:
@@ -31,8 +33,6 @@ services:
         - ./sr_app:/sr_app
       ports:
         - "8000:8000" 
-      depends_on: 
-        - torchserve-gpu
     
   prometheus:
     image: prom/prometheus
@@ -42,8 +42,6 @@ services:
       - prometheus-data:/prometheus
     ports:
      - "9090:9090"
-    depends_on:
-    - torchserve-gpu
 
   grafana:
     image: grafana/grafana
@@ -54,7 +52,8 @@ services:
       - "3000:3000"
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ./grafana/grafana-data:/var/lib/grafana/provisioning/
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
