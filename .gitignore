@@ -161,5 +161,6 @@ cython_debug/
 
 # Ignore the static and media directories
 sr_app/static/
-sr_app/account/templates
-sr_app/gallery/templates
+sr_app/accounts/
+sr_app/gallery/
+
