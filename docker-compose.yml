@@ -8,6 +8,7 @@ services:
       - "8081:8081"
       - "8082:8082"
       - "3903:3903"
+    restart: always
     volumes: 
       - .:/usr/src/torchserve
       - ./model-server/model-store:/home/model-server/model-store
@@ -31,6 +32,7 @@ services:
       image: python-django
       container_name: django-gpu
       command: python manage.py runserver 0.0.0.0:8000
+      restart: always
       volumes:
         - .:/usr/src/app
         - ./app:/usr/src/app
@@ -45,6 +47,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus-gpu
+    restart: always
     volumes:
       - ./prometheus/:/etc/prometheus/
       - prometheus-data:/prometheus
@@ -68,6 +71,7 @@ services:
       - ./grafana/provisioning/dashboards/cadvisor-exporter_rev1.json:/etc/grafana/provisioning/dashboards/cadvisor-exporter_rev1.json
       - ./grafana/provisioning/dashboards/torchserve_dashboard.json:/etc/grafana/provisioning/dashboards/torchserve_dashboard.json
       - ${AZURE_FILE_SHARE_NAME}/grafana:/etc/grafana/
+    restart: always
     environment:
       - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
       - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
@@ -77,6 +81,7 @@ services:
     container_name: cadvisor
     ports:
     - 8083:8080
+    restart: always
     volumes:
     - /:/rootfs:ro
     - /var/run:/var/run:rw
