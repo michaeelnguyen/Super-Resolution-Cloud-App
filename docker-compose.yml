@@ -15,6 +15,10 @@ services:
       - ./model-server/config.properties:/home/model-server/config.properties
       - ./model-server/torchserve_custom.mtail:/home/model-server/torchserve_custom.mtail
       - ./model-server/metrics.yaml:/home/model-server/metrics.yaml
+      - ${AZURE_FILE_SHARE_NAME}/torchserve:/home/model-server/
+    environment:
+      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
+      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
     deploy:
       resources:
         reservations:
@@ -31,6 +35,10 @@ services:
         - .:/usr/src/app
         - ./app:/usr/src/app
         - ./sr_app:/sr_app
+        - ${AZURE_FILE_SHARE_NAME}/django:/sr_app
+      environment:
+        - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
+        - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
       ports:
         - "8000:8000" 
     
@@ -40,6 +48,10 @@ services:
     volumes:
       - ./prometheus/:/etc/prometheus/
       - prometheus-data:/prometheus
+      - ${AZURE_FILE_SHARE_NAME}/prometheus:/etc/prometheus/
+    environment:
+      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
+      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
     ports:
      - "9090:9090"
 
@@ -55,6 +67,10 @@ services:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./grafana/provisioning/dashboards/cadvisor-exporter_rev1.json:/etc/grafana/provisioning/dashboards/cadvisor-exporter_rev1.json
       - ./grafana/provisioning/dashboards/torchserve_dashboard.json:/etc/grafana/provisioning/dashboards/torchserve_dashboard.json
+      - ${AZURE_FILE_SHARE_NAME}/grafana:/etc/grafana/
+    environment:
+      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
+      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
