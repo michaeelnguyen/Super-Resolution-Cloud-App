@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'gallery.apps.GalleryConfig',
     'sr_app',
+    'storages',
 
 ]
 
@@ -126,6 +127,16 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Azure Storage configurations
+# django < 4.2
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+STATICFILES_STORAGE = 'custom_storage.custom_azure.PublicAzureStorage'
+
+AZURE_ACCOUNT_NAME = 'your-storage-account-name'
+AZURE_ACCOUNT_KEY = 'your-storage-account-key'
+AZURE_CONTAINER = 'your-container-name'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -137,28 +148,13 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIAFILES_DIRS = [
-    BASE_DIR / 'static/media/'
-    
-]
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'static/media/users'
 USER_MEDIA_ROOT = MEDIA_ROOT / 'users/'
-
-USER_MEDIA_STORAGE = FileSystemStorage(location=USER_MEDIA_ROOT, base_url=MEDIA_URL)
-
+USER_MEDIA_STORAGE = DEFAULT_FILE_STORAGE
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-#AWS_QUERYSTRING_AUTH = False
-#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-#AWS_ACCESS_KEY_ID = ''
-#AWS_SECRET_ACCESS_KEY = ''
-
-#AWS_STORAGE_BUCKET_NAME = ''
