@@ -89,14 +89,46 @@
                     {% else %}
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0">Homepage</h3>
-                        <div class="card">
-                            <div class="card-header">
-                                <p>Information</p>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-lg-4">
+                            <div class="card pb-5">
+                                <div class="card-header">
+                                    <p>Information</p>
+                                </div>
+                                <div class="card-body">
+                                    <p><b>Welcome to Enhance! Enhance! Enhance!</b></p>
+                                    <p>The Django application uses deep learning-based Super Resolution (SR) models to enhance low resolution images using the Torchserve API.</p>
+                                    <p><b>Note.</b> This application is used for thesis experimental and demo purposes.</p>
+                             
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p></p>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <p>Models</p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-4">Super Resoluton Models for this application: <a href="https://github.com/xinntao/Real-ESRGAN"><b>Real-ESRGAN</b></a> and <a href="https://github.com/JingyunLiang/SwinIR"><b>Swin-IR</b></a>.</p>
+                                    <p>Both models were pre-trained using the <a href="https://cv.snu.ac.kr/research/EDSR/DIV2K.tar">DIV2K</a> and <a href="https://cv.snu.ac.kr/research/EDSR/Flickr2K.tar">Flickr2K</a> dataset for real-world image SR.</p>
+                                    <p> &nbsp;&nbsp;- <b>Real-ESRGAN</b> utilizes a Generative Adversarial Network (GAN) architecture.</p>
+                                    <p> &nbsp;&nbsp;- <b>Swin-IR</b> utilizes a Transformer-based architecture.</p>
+                                </div>
                             </div>
-
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card pb-4">
+                                <div class="card-header">
+                                    <p>Instructions</p>
+                                </div>
+                                <div class="card-body pb-1">
+                                    <p>1. Create an account and/or login.</p>
+                                    <p>2. Select photos to upload and select SR model.</p>
+                                    <p>3. Upload!</p>
+                                    <p>4. View your results in Photo Gallery. <br>&nbsp;&nbsp;<b>Start Today!</b></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {% endif %}
