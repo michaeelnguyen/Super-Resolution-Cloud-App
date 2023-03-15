@@ -132,9 +132,9 @@ USE_TZ = True
 DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 STATICFILES_STORAGE = 'custom_storage.custom_azure.PublicAzureStorage'
 
-AZURE_ACCOUNT_NAME = 'your-storage-account-name'
-AZURE_ACCOUNT_KEY = 'your-storage-account-key'
-AZURE_CONTAINER = 'your-container-name'
+AZURE_ACCOUNT_NAME = config('AZURE_ACCOUNT_NAME')
+AZURE_ACCOUNT_KEY = config('AZURE_ACCOUNT_KEY')
+AZURE_CONTAINER = config('AZURE_CONTAINER')
 
 
 # Static files (CSS, JavaScript, Images)
