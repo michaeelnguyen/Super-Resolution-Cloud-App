@@ -67,8 +67,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'accounts/templates',
-            BASE_DIR / 'gallery/templates',
+            BASE_DIR / 'staticfiles',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -142,8 +141,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [    
-    BASE_DIR / 'staticfiles',    
-    BASE_DIR / 'staticfiles/assets',    
+    BASE_DIR / 'staticfiles',        
 ]
 MEDIA_ROOT = BASE_DIR / '/media/users'
 USER_MEDIA_STORAGE = DEFAULT_FILE_STORAGE
