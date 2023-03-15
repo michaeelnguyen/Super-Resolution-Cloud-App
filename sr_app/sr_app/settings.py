@@ -129,28 +129,23 @@ USE_TZ = True
 
 # Azure Storage configurations
 # django < 4.2
-DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-STATICFILES_STORAGE = 'custom_storage.custom_azure.PublicAzureStorage'
+DEFAULT_FILE_STORAGE = 'custom_azure.AzureMediaStorage'
+STATICFILES_STORAGE = 'custom_azure.AzureStaticStorage'
 
 AZURE_ACCOUNT_NAME = config('AZURE_ACCOUNT_NAME')
 AZURE_ACCOUNT_KEY = config('AZURE_ACCOUNT_KEY')
-AZURE_CONTAINER = config('AZURE_CONTAINER')
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-    BASE_DIR / 'accounts/templates/',
-    BASE_DIR / 'gallery/templates/',
-]
-
 MEDIA_URL = '/media/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_ROOT = BASE_DIR / 'static/media/users'
-USER_MEDIA_ROOT = MEDIA_ROOT / 'users/'
+
+STATICFILES_DIRS = [    
+    BASE_DIR / 'staticfiles',    
+    BASE_DIR / 'staticfiles/assets',    
+]
+MEDIA_ROOT = BASE_DIR / '/media/users'
 USER_MEDIA_STORAGE = DEFAULT_FILE_STORAGE
 
 

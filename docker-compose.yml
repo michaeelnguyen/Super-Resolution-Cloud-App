@@ -30,7 +30,7 @@ services:
 
   django:
       image: python-django
-      container_name: django-gpu
+      container_name: django
       command: python manage.py runserver 0.0.0.0:8000
       restart: always
       volumes:
@@ -46,7 +46,7 @@ services:
     
   prometheus:
     image: prom/prometheus
-    container_name: prometheus-gpu
+    container_name: prometheus
     restart: always
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -60,7 +60,7 @@ services:
 
   grafana:
     image: grafana/grafana
-    container_name: grafana-gpu
+    container_name: grafana
     depends_on:
       - prometheus
     ports:
