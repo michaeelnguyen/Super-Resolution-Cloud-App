@@ -9,17 +9,22 @@ services:
       - "8082:8082"
       - "3903:3903"
     restart: always
-    volumes: 
-      - .:/usr/src/torchserve
+    volumes:
+#      - .:/usr/src/torchserve 
       - ./model-server/model-store:/home/model-server/model-store
       - ./model-server/logs:/home/model-server/logs
-      - ./model-server/config.properties:/home/model-server/config.properties
-      - ./model-server/torchserve_custom.mtail:/home/model-server/torchserve_custom.mtail
-      - ./model-server/metrics.yaml:/home/model-server/metrics.yaml
-      - ${AZURE_FILE_SHARE_NAME}/torchserve:/home/model-server/
+      - ./model-server/:/home/model-server/
     environment:
-      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
-      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
+      - TEMP=/tmp
+      - AZURE_STORAGE_ACCOUNT=$AZURE_ACCOUNT_NAME
+      - AZURE_STORAGE_ACCESS_KEY=$AZURE_ACCOUNT_KEY
+      - AZURE_STORAGE_ACCOUNT_CONTAINER=$AZURE_CONTAINER_NAME
+    devices:
+      - /dev/fuse
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
     deploy:
       resources:
         reservations:
@@ -34,13 +39,9 @@ services:
       command: python manage.py runserver 0.0.0.0:8000
       restart: always
       volumes:
-        - .:/usr/src/app
-        - ./app:/usr/src/app
+#        - .:/usr/src/app
+#        - ./app:/usr/src/app
         - ./sr_app:/sr_app
-        - ${AZURE_FILE_SHARE_NAME}/django:/sr_app
-      environment:
-        - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
-        - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
       ports:
         - "8000:8000" 
     
@@ -51,10 +52,6 @@ services:
     volumes:
       - ./prometheus/:/etc/prometheus/
       - prometheus-data:/prometheus
-      - ${AZURE_FILE_SHARE_NAME}/prometheus:/etc/prometheus/
-    environment:
-      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
-      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
     ports:
      - "9090:9090"
 
@@ -70,11 +67,7 @@ services:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./grafana/provisioning/dashboards/cadvisor-exporter_rev1.json:/etc/grafana/provisioning/dashboards/cadvisor-exporter_rev1.json
       - ./grafana/provisioning/dashboards/torchserve_dashboard.json:/etc/grafana/provisioning/dashboards/torchserve_dashboard.json
-      - ${AZURE_FILE_SHARE_NAME}/grafana:/etc/grafana/
     restart: always
-    environment:
-      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
-      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
@@ -91,7 +84,10 @@ services:
 volumes:
   prometheus-data: {}
   grafana-data: {}
-  app: {}
+#  app: {}
+
+
+  
 
   
   

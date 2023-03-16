@@ -20,7 +20,7 @@ def get_user_directory_path(instance, filename):
            raise NotImplementedError(f"Unknown user type: {type(instance.user)}")
    elif isinstance(instance, SRPhoto):
        if instance.user.is_superuser:
-           return f"admin/results/{filename}"
+           return f"results/{filename}"
        elif isinstance(instance.user, Customer):
            return f"{instance.user.customer.uuid}/{filename}"
        elif isinstance(instance.user, Employee):

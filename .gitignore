@@ -164,3 +164,6 @@ sr_app/static/
 sr_app/accounts/
 sr_app/gallery/
 
+config.yaml
+*.deb
+

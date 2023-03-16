@@ -24,6 +24,9 @@ from accounts.models import Customer
 from gallery.models import Category, Photo, SRPhoto, get_user_directory_path
 from PIL import Image
 
+from azure.storage.blob import BlobServiceClient
+from decouple import config
+
 # Create your views here.
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer', 'employee', 'admin'])
@@ -164,26 +167,40 @@ def uploadPage(request, pk):
 def viewImg(request, pk):
     photo = Photo.objects.get(id=pk)
     srphoto = SRPhoto.objects.get(original_photo=photo)
-    try:
-        img_path = os.path.join(settings.MEDIA_ROOT, str(photo.image))
-        img = Image.open(img_path)
-        img_path_sr = os.path.join(settings.MEDIA_ROOT, str(srphoto.image))
-        img_sr = Image.open(img_path_sr)
-    except IOError:
-        raise Http404("Image does not exist")
     
+    # Get the connection string for the storage account
+    conn_str = config('AZURE_CONN_STRING')
+                    
+    # Get the name of the container and blob
+    container_name = 'media'
+    blob_name = photo.image.name
+    sr_blob_name = srphoto.image.name
+
+    # Create an instance of the BlobServiceClient class
+    blob_service_client = BlobServiceClient.from_connection_string(conn_str)
+
+    # Get a reference to the blob
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
+    sr_blob_client = blob_service_client.get_blob_client(container=container_name, blob=sr_blob_name)
+
+    # Download the blob content
+    photo_content = blob_client.download_blob().readall()
+    srphoto_content = sr_blob_client.download_blob().readall()
+
+    # Open the image from the downloaded content
+    img = Image.open(io.BytesIO(photo_content))
+    img_sr = Image.open(io.BytesIO(srphoto_content))
+
     width, height = img.size
     color_mode = img.mode
     file_format = img.format
-    file_size = math.ceil(os.path.getsize(img_path) / 1000)
+    file_size = math.ceil(len(photo_content) / 1000)
 
     sr_file_format = img_sr.format
-    sr_file_size = math.ceil(os.path.getsize(img_path_sr) / 1000)
-    img.close()
-    img_sr.close()
+    sr_file_size = math.ceil(len(srphoto_content) / 1000)
 
     context = {'photo': photo, 'srphoto': srphoto, 'color_mode': color_mode, 'file_format': file_format, 'file_size': file_size, 'sr_file_format': sr_file_format, 'sr_file_size': sr_file_size, 'height': height, 'width': width}
-    return render(request, 'viewPhoto.html', context)
+    return render(request, 'viewPhoto.html', context)   
 
 @login_required(login_url='login')
 def deleteImg(request, pk):
@@ -194,8 +211,29 @@ def deleteImg(request, pk):
                 photo = Photo.objects.get(id=photo_id)
                 sr_photo = SRPhoto.objects.get(original_photo=photo)
                 if photo.user == request.user and sr_photo.user == request.user:
-                    photo.delete()
-                    sr_photo.delete()
+                    # Get the connection string for the storage account
+                    conn_str = config('AZURE_CONN_STRING')
+                    
+                    # Get the name of the container and blob
+                    container_name = 'media'
+                    blob_name = photo.image.name
+                    sr_blob_name = sr_photo.image.name
+
+                    # Create an instance of the BlobServiceClient class
+                    blob_service_client = BlobServiceClient.from_connection_string(conn_str)
+                    try:
+                        # Get a reference to the blob
+                        blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
+                        # Delete the blob
+                        blob_client.delete_blob()
+                        photo.delete()
+
+                        blob_client = blob_service_client.get_blob_client(container=container_name, blob=sr_blob_name)
+                        blob_client.delete_blob()
+                        sr_photo.delete()
+                    except Exception as ex:
+                        return HttpResponse(f"Error deleting blob: {ex}")
+                    
                 else:
                     return JsonResponse({'success': False, 'message': 'You do not have permission to delete this photo.'})
             except Photo.DoesNotExist:
