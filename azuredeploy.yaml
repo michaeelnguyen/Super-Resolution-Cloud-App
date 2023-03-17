@@ -1,0 +1,92 @@
+apiVersion: '2023-03-15'
+location: westus2
+name: srappContainerGroup
+properties:
+  containers:
+  - name: torchserve-gpu
+    properties:
+      image: srappthesis.azurecr.io/torchserve-gpu
+      command:
+        - ./torchserve_start.sh
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+          gpu:
+            count: 1
+            sku: 
+      ports:
+      - protocol: tcp
+        port: 8080
+      - protocol: tcp
+        port: 8081
+      - protocol: tcp
+        port: 8082
+      - protocol: tcp
+        port: 3903
+      environmentVariables:
+      - name: TEMP
+        value: /TEMP
+      - name: AZURE_STORAGE_ACCOUNT
+        value: 
+      - name: AZURE_STORAGE_ACCESS_KEY
+        value:
+      - name: AZURE_STORAGE_ACCOUNT_CONTAINER
+        value:
+      volumeMounts: # Array of volume mounts for the instance
+      - name: dev-fuse
+        mountPath: /dev/fuse
+        readOnly: false
+
+
+  - name: django
+    properties:
+      image: srappthesis.azurecr.io/django
+      command:
+        - python manage.py runserver 0.0.0.0:8000
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - protocol: tcp
+        port: 8000
+
+  - name: prometheus
+    properties:
+      image: srappthesis.azurecr.io/prometheus
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - protocol: tcp
+        port: 9090
+  
+  - name: grafana
+    properties:
+      image: srappthesis.azurecr.io/grafana
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - protocol: tcp
+        port: 3000
+
+osType: Linux
+ipAddress:
+  type: Public
+  ports:
+  - protocol: tcp
+    port: 80
+
+restartPolicy: always
+
+volumes:
+  - name: dev-fuse
+    hostPath:
+      path: /dev/fuse
+
+tags: {exampleTag: tutorial}
+type: Microsoft.ContainerInstance/containerGroups
