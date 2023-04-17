@@ -1,0 +1,108 @@
+name: srappContainerGroup
+apiVersion: '2021-09-01'
+location: westus2
+properties:
+  containers:
+  - name: torchserve-gpu
+    properties:
+      image: srappthesis.azurecr.io/srapp:torchserve-gpu
+      command:
+        - ./torchserve_start.sh
+      resources:
+        requests:
+          cpu: 2
+          memoryInGB: 12
+          gpu:
+            count: 1
+            sku: K80
+      volumeMounts:
+      - mountPath: /ts-backup
+        name: torchserve-data
+      ports:
+      - protocol: tcp
+        port: 8080
+      - protocol: tcp
+        port: 8081
+      - protocol: tcp
+        port: 8082
+      - protocol: tcp
+        port: 3903
+      environmentVariables:
+      - name: AZURE_STORAGE_ACCOUNT
+        secureValue: <AZURE_STORAGE_ACCOUNT>
+      - name: AZURE_STORAGE_ACCESS_KEY
+        secureValue: <AZURE_STORAGE_ACCESS_KEY>
+      - name: AZURE_STORAGE_ACCOUNT_CONTAINER
+        secureValue: <AZURE_STORAGE_ACCOUNT_CONTAINER>
+
+  - name: prometheus
+    properties:
+      image: srappthesis.azurecr.io/srapp:prom
+      resources:
+        requests:
+          cpu: 0.5
+          memoryInGB: 0.5
+      ports:
+      - protocol: tcp
+        port: 9090
+  
+  - name: grafana
+    properties:
+      image: srappthesis.azurecr.io/srapp:grafana
+      resources:
+        requests:
+          cpu: 0.5
+          memoryInGB: 0.5
+      ports:
+      - protocol: tcp
+        port: 3000
+
+  - name: django
+    properties:
+      image: srappthesis.azurecr.io/srapp:django-gunicorn
+      resources:
+        requests:
+          cpu: 1
+          memoryInGB: 1
+      ports:
+      - protocol: tcp
+        port: 8000
+      environmentVariables:
+      - name: SECRET_KEY
+        secureValue: $SECRET_KEY
+      - name: DEBUG
+        secureValue: 0
+      - name: AZURE_ACCOUNT_NAME
+        secureValue: $AZURE_ACCOUNT_NAME
+      - name: AZURE_STORAGE_ACCESS_KEY
+        secureValue: $AZURE_STORAGE_ACCESS_KEY
+      - name: AZURE_FILE_SHARE_NAME
+        secureValue: $AZURE_FILE_SHARE_NAME
+      - name: AZURE_CONN_STRING
+        secureValue: $AZURE_CONN_STRING
+
+  imageRegistryCredentials: # Credentials to pull a private image
+   - server: srappthesis.azurecr.io
+     username: $ACR_USERNAME
+     password: $ACR_PASSWORD
+
+  osType: Linux
+  restartPolicy: OnFailure
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: tcp
+      port: 8000
+    - protocol: tcp
+      port: 3000
+    dnsNameLabel: srappthesis
+
+  volumes:
+  - name: torchserve-data
+    azureFile:
+      sharename: $AZURE_FILE_SHARE_NAME
+      storageAccountName: $AZURE_STORAGE_ACCOUNT_NAME
+      storageAccountKey: $AZURE_STORAGE_ACCESS_KEY
+
+tags: {srapp-gpu: latest}
+type: Microsoft.ContainerInstance/containerGroups
