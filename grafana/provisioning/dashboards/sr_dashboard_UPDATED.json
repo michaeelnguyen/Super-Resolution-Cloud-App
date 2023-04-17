@@ -1,0 +1,1017 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^\\{__name__=\"ts_inference_requests_total\", instance=\"host\\.docker\\.internal:8082\", job=\"torchserve\", model_name=\"swinIR\", model_version=\"default\", uuid=\"9218d37f\\-d47c\\-48d8\\-b646\\-0177a6f2e188\"\\}$/",
+          "limit": 100,
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_inference_requests_total",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Inference Requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 3,
+        "y": 0
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_prediction_time",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Avg Prediction Time",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_inf_CPU_UTILIZATION",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Avg CPU Utilization",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 9,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_inf_MEMORY_UTILIZATION",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Avg Memory Utilization",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "description": "Inference and Queue Latency (in microseconds)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_inference_latency_microseconds",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_queue_latency_microseconds",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Inference and Queue Latency",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 120
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 0,
+        "y": 5
+      },
+      "id": 17,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "/^\\{__name__=\"ts_inference_latency_microseconds\", instance=\"host\\.docker\\.internal:8082\", job=\"torchserve\", model_name=\"swinIR\", model_version=\"default\", uuid=\"9218d37f\\-d47c\\-48d8\\-b646\\-0177a6f2e188\"\\}$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_inference_latency_microseconds",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Avg Inference Latency",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 3,
+        "y": 5
+      },
+      "id": 21,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "/^\\{__name__=\"ts_queue_latency_microseconds\", instance=\"host\\.docker\\.internal:8082\", job=\"torchserve\", model_name=\"swinIR\", model_version=\"default\", uuid=\"9218d37f\\-d47c\\-48d8\\-b646\\-0177a6f2e188\"\\}$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_queue_latency_microseconds",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Avg Queue Latency",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 5
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_inf_GPU_UTILIZATION",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Avg GPU Utilization",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 9,
+        "y": 5
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_inf_GPU_MEMORY_UTILIZATION",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Avg GPU Memory Utililization",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "description": "RAM Metrics, Memory Used and Memory Available (in MB) and GPU Memory Used (in MB)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_MEMORY_USED",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_MEMORY_AVAILABLE",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_GPU_MEMORY_USED",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "Memory Used / Available",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "description": "CPU, Disk, Memory, and GPU Memory Utilization (%)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_CPU_UTILIZATION",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_GPU_UTILIZATION",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "System Utilization",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "X8IuBFf4k"
+      },
+      "description": "Disk Used and Disk Available metrics (in GB)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 17
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_DISK_USAGE",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X8IuBFf4k"
+          },
+          "editorMode": "builder",
+          "expr": "ts_DISK_AVAILABLE",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Disk Used / Available",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "15m",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2023-03-24T09:28:03.000Z",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Super Resolution Dashboard",
+  "uid": "cd1Vgax4k",
+  "version": 1,
+  "weekStart": ""
+}

@@ -166,4 +166,8 @@ sr_app/gallery/
 
 config.yaml
 *.deb
+nginx/
 
+scripts/default.conf
+model-server/model-store/baseline_json.zip
+models/baseline_ts_models.zip

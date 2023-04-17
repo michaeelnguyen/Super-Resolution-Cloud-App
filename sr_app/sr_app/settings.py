@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+from decouple import config, Csv
 
 import uuid
 from django.conf import settings
@@ -34,8 +34,23 @@ DEBUG = config('DEBUG')
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# # Set the secure flag on session cookies
+# SESSION_COOKIE_SECURE = True
+# # Set the secure flag on CSRF cookies
+# CSRF_COOKIE_SECURE = True
+# # Redirect all HTTP requests to HTTPS
+# SECURE_SSL_REDIRECT = True
+# # Use HTTP Strict Transport Security (HSTS) to force clients to use HTTPS
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# # Enable the X-XSS-Protection header
+# SECURE_BROWSER_XSS_FILTER = True
+# # Enable the X-Content-Type-Options header
+# SECURE_CONTENT_TYPE_NOSNIFF = True
 
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -129,6 +144,7 @@ USE_TZ = True
 # Azure Storage configurations
 # django < 4.2
 DEFAULT_FILE_STORAGE = 'custom_azure.AzureMediaStorage'
+#DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 STATICFILES_STORAGE = 'custom_azure.AzureStaticStorage'
 
 AZURE_ACCOUNT_NAME = config('AZURE_ACCOUNT_NAME')
@@ -141,11 +157,11 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [    
-    BASE_DIR / 'staticfiles',        
+    BASE_DIR / 'static',
 ]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_ROOT = BASE_DIR / '/media/users'
 USER_MEDIA_STORAGE = DEFAULT_FILE_STORAGE
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

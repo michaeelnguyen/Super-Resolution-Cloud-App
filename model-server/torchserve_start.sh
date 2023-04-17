@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Mount Torchserve directory to Azure Blob Storage using blobfuse2
-blobfuse2 mount /torchserve --config-file=./config.yaml
+#blobfuse2 mount /torchserve --config-file=./config.yaml
 
 sleep 20
 
-rsync -av --exclude='mtail' --exclude='tmp/' --exclude='logs/config/' /home/model-server /torchserve/model-server-backup
+#rsync -av --exclude='mtail' --exclude='tmp/' --exclude='logs/config/' /home/model-server /torchserve/model-server-backup
 
 torchserve --start --ncs --model-store model-store --models all --ts-config config.properties &
 

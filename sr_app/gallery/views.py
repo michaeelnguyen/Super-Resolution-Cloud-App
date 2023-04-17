@@ -103,7 +103,7 @@ def uploadPage(request, pk):
             category = None
         
         for image in images:
-            print(image)
+            #print(image)
             # Make API request to TorchServe model based on model_chosen value
             if model_chosen == 'realesrgan':
                 model_name = 'realESRGAN'
@@ -114,7 +114,7 @@ def uploadPage(request, pk):
                 return render(request, 'upload.html', context)
 
             # Construct the inference API request
-            url = f'http://host.docker.internal:8080/predictions/{model_name}'
+            url = f'http://localhost:8080/predictions/{model_name}'
             files = {'data': image.read()}
 
             # Send the inference API request and get the response
@@ -196,10 +196,11 @@ def viewImg(request, pk):
     file_format = img.format
     file_size = math.ceil(len(photo_content) / 1000)
 
+    width_sr, height_sr = img_sr.size
     sr_file_format = img_sr.format
     sr_file_size = math.ceil(len(srphoto_content) / 1000)
 
-    context = {'photo': photo, 'srphoto': srphoto, 'color_mode': color_mode, 'file_format': file_format, 'file_size': file_size, 'sr_file_format': sr_file_format, 'sr_file_size': sr_file_size, 'height': height, 'width': width}
+    context = {'photo': photo, 'srphoto': srphoto, 'color_mode': color_mode, 'file_format': file_format, 'file_size': file_size, 'sr_file_format': sr_file_format, 'sr_file_size': sr_file_size, 'height': height, 'width': width, 'height_sr': height_sr, 'width_sr': width_sr}
     return render(request, 'viewPhoto.html', context)   
 
 @login_required(login_url='login')

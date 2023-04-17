@@ -1,7 +1,7 @@
-FROM ubuntu
+FROM nvidia/cuda:10.2-base-ubuntu18.04
 WORKDIR /usr/src/torchserve
 
-FROM pytorch/torchserve:latest-gpu
+FROM pytorch/torchserve:0.6.1-gpu
 USER root
 RUN sudo apt-get update --fix-missing \
 && apt-get install -y wget \
@@ -16,11 +16,12 @@ rsync \
 
 RUN mkdir /torchserve
 
-
 COPY model-server/config.properties ./
 COPY model-server/metrics.yaml ./
 COPY model-server/torchserve_custom.mtail ./
 COPY model-server/config.yaml ./
+COPY model-server/model-store/realESRGAN.mar ./model-store
+COPY model-server/model-store/swinIR.mar ./model-store
 COPY scripts/torchserve_start.sh ./
 COPY model-server/requirements_nn.txt ./
 RUN pip install -r requirements_nn.txt
@@ -34,15 +35,15 @@ RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 # Install NVIDIA container toolkit
 RUN apt-get install -y nvidia-container-toolkit
 
-# Add Microsoft GPG key
-RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add
+# # Add Microsoft GPG key
+# RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add
 
-# Install Blobfuse2
-RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb \
-&& dpkg -i packages-microsoft-prod.deb \
-&& apt-get update \
-&& apt-get install -y libfuse3-dev fuse3 \
-&& apt-get install -y blobfuse2
+# # Install Blobfuse2
+# RUN wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
+# && dpkg -i packages-microsoft-prod.deb \
+# && apt-get update \
+# && apt-get install -y libfuse3-dev fuse3 \
+# && apt-get install -y blobfuse2
 
 # Remove residual installation files
 RUN apt-get clean \
