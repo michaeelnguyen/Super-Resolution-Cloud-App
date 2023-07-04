@@ -1,2 +1,2 @@
-# sr-app-gpu-thesis
- Dockerized container for SRapp with Django, Torchserve, Prometheus, Grafana, mtail and cadvisor
+# Super-Resolution Cloud App 
+ Dockerized container with Django, Torchserve, Prometheus, Grafana, mtail and Cadvisor
